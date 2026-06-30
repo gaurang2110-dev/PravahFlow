@@ -1,0 +1,11 @@
+{
+  "name": "pravah-flow-monorepo",
+  "private": true,
+  "workspaces": [
+    "apps/*",
+    "packages/*"
+  ],
+  "devDependencies": {
+    "@react-native/jest-preset": "^0.86.0"
+  }
+}
