@@ -1,3 +1,31 @@
 node_modules/
 dist/
 .DS_Store
+.DS_Store?
+._*
+.Spotlight-V100
+.Trashes
+ehthumbs.db
+Thumbs.db
+
+# IDEs and editors
+.idea/
+.vscode/
+*.suo
+*.ntvs*
+*.njsproj
+*.sln
+*.sw?
+
+# React Native / Mobile / Monorepo general
+**/node_modules/
+**/build/
+**/DerivedData/
+**/.expo/
+**/.metro-health-check*
+**/local.properties
+**/Pods/
+
+# Output
+shared/dist/
+shared/node_modules/

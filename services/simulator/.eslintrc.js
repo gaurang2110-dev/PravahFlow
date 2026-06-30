@@ -1,0 +1,20 @@
+module.exports = {
+  parser: '@typescript-eslint/parser',
+  extends: [
+    'eslint:recommended',
+    'plugin:@typescript-eslint/recommended'
+  ],
+  parserOptions: {
+    ecmaVersion: 'latest',
+    sourceType: 'module',
+  },
+  env: {
+    node: true,
+    es2022: true,
+  },
+  rules: {
+    '@typescript-eslint/no-explicit-any': 'error',
+    'no-console': 'error',
+    '@typescript-eslint/no-unused-vars': ['error', { argsIgnorePattern: '^_' }]
+  }
+};
