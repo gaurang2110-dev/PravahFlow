@@ -5,6 +5,18 @@
   "workspaces": [
     "apps/*",
     "services/*",
-    "shared"
-  ]
+    "shared",
+    "packages/*"
+  ],
+  "scripts": {
+    "lint": "eslint .",
+    "format": "prettier --write ."
+  },
+  "devDependencies": {
+    "@typescript-eslint/eslint-plugin": "^8.62.1",
+    "@typescript-eslint/parser": "^8.62.1",
+    "@react-native/jest-preset": "^0.86.0",
+    "eslint": "^8.57.1",
+    "typescript": "^5.0.0"
+  }
 }

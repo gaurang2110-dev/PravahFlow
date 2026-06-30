@@ -31,3 +31,7 @@ Thumbs.db
 **/.metro-health-check*
 **/local.properties
 **/Pods/
+
+# Output
+shared/dist/
+shared/node_modules/

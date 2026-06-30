@@ -1,0 +1,5 @@
+export enum MapProvider {
+  GOOGLE_MAPS = 'GOOGLE_MAPS',
+  MAPBOX = 'MAPBOX',
+  OPEN_STREET_MAP = 'OPEN_STREET_MAP',
+}
