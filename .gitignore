@@ -1,11 +1,5 @@
-# Node
 node_modules/
-npm-debug.log*
-yarn-debug.log*
-yarn-error.log*
-.pnpm-debug.log*
-
-# OS-specific
+dist/
 .DS_Store
 .DS_Store?
 ._*
@@ -31,3 +25,7 @@ Thumbs.db
 **/.metro-health-check*
 **/local.properties
 **/Pods/
+
+# Output
+shared/dist/
+shared/node_modules/

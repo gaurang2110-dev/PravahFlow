@@ -1,17 +1,28 @@
 import React from 'react';
-import { StyleSheet, View } from 'react-native';
-import { Map } from '../components/Map';
+import { View, Text, StyleSheet, SafeAreaView } from 'react-native';
 
 export const LiveMapScreen: React.FC = () => {
   return (
-    <View style={styles.container}>
-      <Map />
-    </View>
+    <SafeAreaView style={styles.container}>
+      <View style={styles.content}>
+        <Text style={styles.title}>Live Map</Text>
+      </View>
+    </SafeAreaView>
   );
 };
 
 const styles = StyleSheet.create({
   container: {
     flex: 1,
+    backgroundColor: '#ffffff',
+  },
+  content: {
+    flex: 1,
+    justifyContent: 'center',
+    alignItems: 'center',
+  },
+  title: {
+    fontSize: 20,
+    fontWeight: 'bold',
   },
 });

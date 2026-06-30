@@ -1,0 +1,6 @@
+export enum TripStatus {
+  SCHEDULED = 'SCHEDULED',
+  EN_ROUTE = 'EN_ROUTE',
+  COMPLETED = 'COMPLETED',
+  CANCELLED = 'CANCELLED',
+}
