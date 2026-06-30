@@ -1,0 +1,17 @@
+{
+  "name": "@pravah/shared",
+  "version": "1.0.0",
+  "description": "Shared domain models, utilities, and integrations for PRAVAH FLOW",
+  "main": "dist/index.js",
+  "types": "dist/index.d.ts",
+  "scripts": {
+    "build": "tsc",
+    "clean": "rm -rf dist",
+    "lint": "eslint src --ext .ts,.tsx",
+    "test": "jest"
+  },
+  "dependencies": {},
+  "devDependencies": {
+    "typescript": "^5.0.0"
+  }
+}
