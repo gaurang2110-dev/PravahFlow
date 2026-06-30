@@ -1,0 +1,11 @@
+Bundler 4.0.7 is running, but your lockfile was generated with 2.1.4. Installing Bundler 2.1.4 and restarting using that version.
+Fetching gem metadata from https://rubygems.org/.
+Fetching bundler 2.1.4
+Installing bundler 2.1.4
+Calling `DidYouMean::SPELL_CHECKERS.merge!(error_name => spell_checker)' has been deprecated. Please call `DidYouMean.correct_error(error_name, spell_checker)' instead.
+Fetching gem metadata from https://rubygems.org/.......
+CFPropertyList-3.0.9 requires ruby version < 3.2, which is incompatible with the
+current version, ruby 3.2.3p157
+Calling `DidYouMean::SPELL_CHECKERS.merge!(error_name => spell_checker)' has been deprecated. Please call `DidYouMean.correct_error(error_name, spell_checker)' instead.
+bundler: command not found: pod
+Install missing gem executables with `bundle install`

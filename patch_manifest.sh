@@ -1,0 +1,2 @@
+sed -i '4i\    <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />\n    <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" />\n' apps/mobile/android/app/src/main/AndroidManifest.xml
+sed -i '15i\      <meta-data\n        android:name="com.google.android.geo.API_KEY"\n        android:value="@string/GOOGLE_MAPS_API_KEY_ANDROID" />' apps/mobile/android/app/src/main/AndroidManifest.xml
