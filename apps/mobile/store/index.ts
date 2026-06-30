@@ -1,7 +1,10 @@
 import { configureStore } from '@reduxjs/toolkit';
+import vehiclesReducer from './slices/vehicles/vehicleSlice';
 
 export const store = configureStore({
-  reducer: (state = {}, _action) => state, // Dummy reducer to prevent store configuration error when empty
+  reducer: {
+    vehicles: vehiclesReducer,
+  },
 });
 
 export type RootState = ReturnType<typeof store.getState>;
