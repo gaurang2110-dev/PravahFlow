@@ -1,4 +1,4 @@
-export { getFirebaseConfig, FirebaseConfig } from './config';
+export { getFirebaseConfig, type FirebaseConfig } from './config';
 export { firebaseManager } from './FirebaseApp';
 export { getAuth } from './Auth';
 export { getFirestore } from './Firestore';

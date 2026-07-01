@@ -66,6 +66,21 @@ export class MockVehicleRepository implements VehicleRepository {
     return () => {};
   }
 
+  subscribeToVehicles(callback: (vehicles: Vehicle[]) => void): () => void {
+    callback(this.vehicles);
+    return () => {};
+  }
+
+  unsubscribe(subscriptionId: string): void {}
+
+  async getVehicle(id: string): Promise<Vehicle | null> {
+    return this.getById(id);
+  }
+
+  async getVehicles(): Promise<Vehicle[]> {
+    return this.vehicles;
+  }
+
   subscribeToId(id: string, callback: (item: Vehicle | null) => void): () => void {
     return () => {};
   }
