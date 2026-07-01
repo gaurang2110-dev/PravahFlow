@@ -7,4 +7,10 @@ export interface VehicleRepository extends RealtimeRepository<Vehicle> {
   updateLocation(id: string, location: VehicleLocation): Promise<void>;
   getLocation(id: string): Promise<VehicleLocation | null>;
   getTelemetry(id: string): Promise<VehicleTelemetry | null>;
+
+  // Explicitly requested contracts
+  subscribeToVehicles(callback: (vehicles: Vehicle[]) => void): () => void;
+  unsubscribe(subscriptionId: string): void;
+  getVehicle(id: string): Promise<Vehicle | null>;
+  getVehicles(): Promise<Vehicle[]>;
 }
