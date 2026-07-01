@@ -1,10 +1,10 @@
 module.exports = {
-  preset: '@react-native/jest-preset',
-  setupFiles: [
-    '../../node_modules/react-native-gesture-handler/jestSetup.js',
-    '<rootDir>/jest.setup.js'
-  ],
+  preset: 'react-native',
+  setupFilesAfterEnv: ['<rootDir>/jest.setup.js'],
   transformIgnorePatterns: [
-    'node_modules/(?!(jest-)?react-native|@react-native|@react-native-community|@react-navigation|react-redux|@reduxjs|immer|react-native-maps|react-native-config)'
+    'node_modules/(?!(jest-)?react-native|@react-native|@react-navigation|react-native-gesture-handler|react-redux|@reduxjs|react-native-maps|react-native-config|@react-native-firebase|firebase|@firebase)/',
   ],
+  moduleNameMapper: {
+    '^@firebase/(.*)$': '<rootDir>/../../node_modules/@firebase/$1/dist/index.cjs.js',
+  }
 };

@@ -7,6 +7,7 @@ export interface VehicleState {
   locations: Record<string, VehicleLocation>;
   isLoading: boolean;
   error: string | null;
+  connectionStatus: 'Connecting' | 'Connected' | 'Disconnected' | 'Reconnecting';
 }
 
 const initialState: VehicleState = {
@@ -14,6 +15,7 @@ const initialState: VehicleState = {
   locations: {},
   isLoading: false,
   error: null,
+  connectionStatus: 'Disconnected',
 };
 
 const vehicleSlice = createSlice({
@@ -25,6 +27,9 @@ const vehicleSlice = createSlice({
     },
     setError(state, action: PayloadAction<string | null>) {
       state.error = action.payload;
+    },
+    setConnectionStatus(state, action: PayloadAction<'Connecting' | 'Connected' | 'Disconnected' | 'Reconnecting'>) {
+      state.connectionStatus = action.payload;
     },
     setVehicles(state, action: PayloadAction<Vehicle[]>) {
       state.vehicles = action.payload.reduce((acc, vehicle) => {
@@ -38,12 +43,36 @@ const vehicleSlice = createSlice({
         return acc;
       }, {} as Record<string, VehicleLocation>);
     },
+    // Fine-grained updates
+    upsertVehicle(state, action: PayloadAction<Vehicle>) {
+      state.vehicles[action.payload.id] = action.payload;
+    },
+    removeVehicle(state, action: PayloadAction<string>) {
+      delete state.vehicles[action.payload];
+    },
+    upsertLocation(state, action: PayloadAction<VehicleLocation>) {
+      state.locations[action.payload.vehicleId] = action.payload;
+    },
+    removeLocation(state, action: PayloadAction<string>) {
+      delete state.locations[action.payload];
+    },
     updateLocation(state, action: PayloadAction<VehicleLocation>) {
       state.locations[action.payload.vehicleId] = action.payload;
     },
   },
 });
 
-export const { setLoading, setError, setVehicles, setLocations, updateLocation } = vehicleSlice.actions;
+export const {
+  setLoading,
+  setError,
+  setConnectionStatus,
+  setVehicles,
+  setLocations,
+  upsertVehicle,
+  removeVehicle,
+  upsertLocation,
+  removeLocation,
+  updateLocation
+} = vehicleSlice.actions;
 
 export default vehicleSlice.reducer;

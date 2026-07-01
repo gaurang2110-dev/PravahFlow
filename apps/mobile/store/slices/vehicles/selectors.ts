@@ -28,3 +28,8 @@ export const selectVehicleById = (id: string) =>
 
 export const selectVehicleLocationById = (id: string) =>
   createSelector([selectVehicleState], (vehicleState) => vehicleState.locations[id]);
+
+export const selectConnectionStatus = createSelector(
+  [selectVehicleState],
+  (vehicleState) => vehicleState.connectionStatus
+);

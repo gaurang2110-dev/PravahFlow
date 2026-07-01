@@ -1,51 +1,76 @@
 import React, { useEffect } from 'react';
-import { StyleSheet, SafeAreaView, View, ActivityIndicator } from 'react-native';
+import { StyleSheet, SafeAreaView, View, ActivityIndicator, Text } from 'react-native';
 import { useDispatch, useSelector } from 'react-redux';
 import { Map } from '../components/Map';
 import { VehicleLayer } from '../components/vehicles/VehicleLayer';
-import { MockVehicleRepository } from '../services/MockVehicleRepository';
+import { FirebaseVehicleRepository } from '../services/FirebaseVehicleRepository';
 import {
-  setVehicles,
-  setLocations,
   setLoading,
   setError,
+  setConnectionStatus,
+  setVehicles,
+  setLocations,
+  upsertVehicle,
+  removeVehicle,
+  upsertLocation,
+  removeLocation,
 } from '../store/slices/vehicles/vehicleSlice';
-import { selectVehiclesLoading } from '../store/slices/vehicles/selectors';
+import { selectVehiclesLoading, selectConnectionStatus } from '../store/slices/vehicles/selectors';
 
-const repository = new MockVehicleRepository();
+const repository = new FirebaseVehicleRepository();
 
 export const LiveMapScreen: React.FC = () => {
   const dispatch = useDispatch();
   const isLoading = useSelector(selectVehiclesLoading);
+  const connectionStatus = useSelector(selectConnectionStatus);
 
   useEffect(() => {
-    const fetchVehicles = async () => {
-      try {
-        dispatch(setLoading(true));
-        const vehicles = await repository.getAll();
-        dispatch(setVehicles(vehicles));
+    dispatch(setLoading(true));
 
-        // Fetch initial locations for all vehicles
-        const locations = [];
-        for (const vehicle of vehicles) {
-          const location = await repository.getLocation(vehicle.id);
-          if (location) {
-            locations.push(location);
-          }
-        }
-        dispatch(setLocations(locations));
-      } catch (err) {
-        dispatch(setError(err instanceof Error ? err.message : 'Failed to fetch vehicles'));
-      } finally {
-        dispatch(setLoading(false));
-      }
-    };
+    try {
+      const unsubscribeStatus = repository.subscribeToConnectionStatus((status) => {
+        dispatch(setConnectionStatus(status));
+      });
 
-    fetchVehicles();
+      const unsubscribeVehicles = repository.subscribeToVehicleUpdates(
+        (initialVehicles) => {
+          dispatch(setVehicles(initialVehicles));
+          dispatch(setLoading(false));
+        },
+        (vehicle) => dispatch(upsertVehicle(vehicle)),
+        (vehicle) => dispatch(upsertVehicle(vehicle)),
+        (vehicleId) => dispatch(removeVehicle(vehicleId)),
+        (error) => dispatch(setError(error.message))
+      );
+
+      const unsubscribeLocations = repository.subscribeToLocationUpdates(
+        (initialLocations) => dispatch(setLocations(initialLocations)),
+        (location) => dispatch(upsertLocation(location)),
+        (location) => dispatch(upsertLocation(location)),
+        (locationId) => dispatch(removeLocation(locationId)),
+        (error) => dispatch(setError(error.message))
+      );
+
+      return () => {
+        unsubscribeStatus();
+        unsubscribeVehicles();
+        unsubscribeLocations();
+      };
+    } catch (err) {
+      dispatch(setError(err instanceof Error ? err.message : 'Failed to initialize realtime tracking'));
+      dispatch(setLoading(false));
+    }
   }, [dispatch]);
 
   return (
     <SafeAreaView style={styles.container}>
+      {connectionStatus !== 'Connected' && (
+        <View style={styles.statusBanner}>
+          <Text style={styles.statusText}>
+            {connectionStatus === 'Connecting' ? 'Connecting to realtime servers...' : 'Offline. Trying to reconnect...'}
+          </Text>
+        </View>
+      )}
       <Map>
         <VehicleLayer />
       </Map>
@@ -62,6 +87,16 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     backgroundColor: '#ffffff',
+  },
+  statusBanner: {
+    backgroundColor: '#ff9800',
+    padding: 8,
+    alignItems: 'center',
+    justifyContent: 'center',
+  },
+  statusText: {
+    color: '#ffffff',
+    fontWeight: 'bold',
   },
   loadingOverlay: {
     position: 'absolute',
