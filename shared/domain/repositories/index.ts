@@ -4,3 +4,4 @@ export * from './JourneyRepository';
 export * from './ConfigurationRepository';
 export * from './AnalyticsRepository';
 export * from './SimulatorRepository';
+export * from './TelemetryRepository';
