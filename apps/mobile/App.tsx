@@ -14,9 +14,14 @@ import { ErrorBoundary } from './components/ErrorBoundary';
 import { RootNavigator } from './navigation';
 import { SafeAreaProvider } from 'react-native-safe-area-context';
 import { LiveMapScreen } from './screens/LiveMapScreen';
+import { firebaseManager } from './core/firebase';
 
 function App(): React.JSX.Element {
   const isDarkMode = useColorScheme() === 'dark';
+
+  React.useEffect(() => {
+    firebaseManager.initialize();
+  }, []);
 
   return (
     <SafeAreaProvider>
